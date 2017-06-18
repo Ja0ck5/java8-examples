@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * Created by Ja0ck5 on 2017/6/18.
@@ -45,6 +46,17 @@ public class LambdaTest {
         // java8 lambda & stream api
         list.stream().filter((e) -> e.getAge() <18).forEach(System.out::println);
         list.stream().map(Man::getName).forEach(System.out::println);
+    }
+
+    @Test
+    public void testNoParamsNoReturning(){
+        new Thread(() -> System.out.println("This is a runnable")).start();
+    }
+
+    @Test
+    public void testOneParamsNoReturning(){
+        Consumer<Man> consumer = (m) -> System.out.println(m);
+        consumer.accept(new Man("Lynn",18));
     }
 
 }
