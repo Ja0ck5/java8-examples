@@ -3,10 +3,7 @@ package com.ja0ck5.java8;
 import com.ja0ck5.java8.model.Man;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.function.Consumer;
 
 /**
@@ -40,23 +37,52 @@ public class LambdaTest {
         List<Man> children = new ArrayList<>();
         for (Man man : list)
             (man.getAge() < 18 ? children : adults).add(man);
-        System.out.println("old:\r\nadults : " + adults +"\r\nchildren" + children);
+        System.out.println("old:\r\nadults : " + adults + "\r\nchildren" + children);
 
 
         // java8 lambda & stream api
-        list.stream().filter((e) -> e.getAge() <18).forEach(System.out::println);
+        list.stream().filter((e) -> e.getAge() < 18).forEach(System.out::println);
         list.stream().map(Man::getName).forEach(System.out::println);
     }
 
     @Test
-    public void testNoParamsNoReturning(){
+    public void testNoParamsNoReturning() {
         new Thread(() -> System.out.println("This is a runnable")).start();
     }
 
     @Test
-    public void testOneParamsNoReturning(){
+    public void testOneParamsNoReturning() {
         Consumer<Man> consumer = (m) -> System.out.println(m);
-        consumer.accept(new Man("Lynn",18));
+        consumer.accept(new Man("Lynn", 18));
+
+        Consumer<Man> con = m -> System.out.println(m);
+        con.accept(new Man("Ja0ck5", 18));
+    }
+
+    @Test
+    public void testMultiParamsAndHasReturning() {
+
+
+        Comparator<Integer> comparator = (a, b) -> {
+            System.out.println("===========");
+            return Integer.compare(a, b);
+        };
+
+        TreeSet<Integer> setOne = new TreeSet<>(comparator);
+        setOne.add(20);
+        setOne.add(10);
+        setOne.add(50);
+        setOne.add(110);
+        System.out.println(setOne);
+
+        Comparator<Integer> comparatorOmitted = (a, b) -> Integer.compare(a,b);
+
+        TreeSet<Integer> set = new TreeSet<>(comparatorOmitted);
+        set.add(2);
+        set.add(1);
+        set.add(5);
+        set.add(0);
+        System.out.println(set);
     }
 
 }
