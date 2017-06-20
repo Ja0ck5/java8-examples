@@ -85,4 +85,9 @@ public class LambdaTest {
         System.out.println(set);
     }
 
+    @Test
+    public void  testForEach(){
+        Arrays.asList( "a", "b", "c" ).forEach( e -> System.out.println( e ) );
+    }
+
 }
