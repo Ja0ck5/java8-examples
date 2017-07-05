@@ -1,5 +1,6 @@
 package com.ja0ck5.java8;
 
+import com.ja0ck5.java8.functional.ServiceFunction;
 import com.ja0ck5.java8.model.Man;
 import org.junit.Test;
 
@@ -83,6 +84,44 @@ public class LambdaTest {
         set.add(5);
         set.add(0);
         System.out.println(set);
+    }
+
+    List<Man> list = Arrays.asList(
+            new Man("test-1", 15),
+            new Man("test-2", 16),
+            new Man("test-3", 17),
+            new Man("test-4", 18),
+            new Man("test-5", 19),
+            new Man("test-6", 28),
+            new Man("test-7", 8),
+            new Man("test-8", 8),
+            new Man("test-9", 8),
+            new Man("test-10", 10),
+            new Man("test-11", 18)
+    );
+
+
+    @Test
+    public void testCollections(){
+
+        Collections.sort(list,(e1,e2)->{
+            if(e1.getAge() == e2.getAge()){
+                return e1.getName().compareTo(e2.getName());
+            }else{
+                return Integer.compare(e1.getAge(),e2.getAge());
+            }
+        });
+
+        list.forEach(System.out::println);
+    }
+
+    @Test
+    public void testTwoPServiceFuntion(){
+        System.out.println(service(10L,12L,(x,y) -> x+y));
+    }
+
+    public Long service(Long l1, Long l2, ServiceFunction<Long ,Long> sf){
+        return sf.service(l1,l2);
     }
 
 }
