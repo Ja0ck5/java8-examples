@@ -6,6 +6,9 @@ import org.junit.Test;
 
 import java.util.*;
 import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 /**
  * Created by Ja0ck5 on 2017/6/18.
@@ -124,4 +127,64 @@ public class LambdaTest {
         return sf.service(l1,l2);
     }
 
+    /**
+     * Consumer<T>
+     */
+    @Test
+    public void testFunctionalInterfaceConsumer(){
+        consume("this message may be consume",(msg) -> System.out.println(msg+",this is a truth"));
+    }
+
+    public void consume(String msg,Consumer<String> con){
+        con.accept(msg);
+    }
+
+    /**
+     * Supplier<T>
+     */
+    @Test
+    public void testFunctionalInterfaceSupplier(){
+        genNums(10,() -> new Random().nextInt(100)).forEach(System.out::println);
+    }
+
+    public List<Integer> genNums(int num, Supplier<Integer> sup){
+        ArrayList<Integer> integers = new ArrayList<>();
+        for (int i=0;i<num;i++){
+            Integer n = sup.get();
+            integers.add(n);
+        }
+        return integers;
+    }
+
+    /**
+     * Function<T,R>
+     */
+    @Test
+    public void testFunctionalInterfaceFunction(){
+        Integer i = str2Int("10", s -> Integer.parseInt(s));
+        System.out.println(i);
+    }
+
+    public Integer str2Int(String s, Function<String,Integer> fun){
+        return fun.apply(s);
+    }
+
+    /**
+     * Predicate<T>
+     */
+    @Test
+    public void testFunctionalInterfacePredicate(){
+        optList(list,x -> x.getAge() > 8).forEach(System.out::println);
+    }
+
+    public List<Man> optList(List<Man> list, Predicate<Man> pre){
+        ArrayList<Man> nl = new ArrayList<>(list.size());
+        list.forEach(e -> {
+            if(pre.test(e)){
+                nl.add(e);
+            }
+        });
+
+        return nl;
+    }
 }
