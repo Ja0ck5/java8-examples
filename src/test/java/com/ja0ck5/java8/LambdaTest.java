@@ -5,10 +5,7 @@ import com.ja0ck5.java8.model.Man;
 import org.junit.Test;
 
 import java.util.*;
-import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.function.Predicate;
-import java.util.function.Supplier;
+import java.util.function.*;
 
 /**
  * Created by Ja0ck5 on 2017/6/18.
@@ -186,5 +183,35 @@ public class LambdaTest {
         });
 
         return nl;
+    }
+
+    @Test
+    public void testMethodRef(){
+        Consumer<Integer> con = System.out::println;
+        con.accept(1001);
+
+        Man man = new Man("haha", 18);
+        Supplier<String> sup = man::getName;
+        System.out.println(sup.get());
+
+        //static method
+        // x,y params
+        Comparator<Integer> con1 = (x,y) -> Integer.compare(x,y);
+        System.out.println(con1.compare(2,1));
+        Comparator<Integer> con2 = Integer::compareTo;
+        System.out.println(con2.compare(2,1));
+
+        // class initiated method
+        // x invoker ,y param
+        BiPredicate<String ,String> bp = (x,y) -> x.equals(y);
+        System.out.println(bp.test("a","b"));
+        BiPredicate<String ,String> bp2 = String::equals;
+        System.out.println(bp.test("a","a"));
+
+
+        // constructor ref
+        Supplier<Man> sup2 = Man::new;
+        System.out.println(sup2.get());
+
     }
 }
