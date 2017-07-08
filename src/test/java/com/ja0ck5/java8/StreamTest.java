@@ -71,12 +71,28 @@ public class StreamTest {
         list.stream().flatMap(StreamTest::getCharacterStream).forEach(System.out::println);
     }
 
+
     public static Stream getCharacterStream(String string){
         List<Character> list = new ArrayList<>();
         for(Character ch : string.toCharArray()){
             list.add(ch);
         }
         return list.stream();
+    }
+
+    @Test
+    public void testStreamTerminate() throws InterruptedException {
+        boolean b = men.stream().allMatch(e -> e.getStatus().equals(Man.Status.TALL));
+        System.out.println(b);
+
+        boolean b1 = men.stream().anyMatch(e -> e.getStatus().equals(Man.Status.TALL));
+        System.out.println(b1);
+
+        boolean b2 = men.stream().noneMatch(e -> e.getStatus().equals(Man.Status.TALL));
+        System.out.println(b2);
+
+        Optional<Man> first = men.stream().findFirst();
+        System.out.println(first.get());
     }
 
 }
