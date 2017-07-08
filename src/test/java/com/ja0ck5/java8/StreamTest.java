@@ -57,10 +57,26 @@ public class StreamTest {
 
     @Test
     public void testStreamMap() {
-
         List<String> strings = Arrays.asList("a", "b", "c", "d");
-
         strings.stream().map(str -> str.toUpperCase()).forEach(System.out::println);
+        men.stream().map(Man::getName).forEach(System.out::println);
+    }
+
+    @Test
+    public void testStreamFlatMap(){
+        List<String> list = Arrays.asList("gary", "hack", "songhai", "jingling");
+        Stream<Stream<Character>> streamStream = list.stream().map(StreamTest::getCharacterStream);
+        streamStream.forEach(ss -> ss.forEach(System.out::println));
+        System.out.println("==============================");
+        list.stream().flatMap(StreamTest::getCharacterStream).forEach(System.out::println);
+    }
+
+    public static Stream getCharacterStream(String string){
+        List<Character> list = new ArrayList<>();
+        for(Character ch : string.toCharArray()){
+            list.add(ch);
+        }
+        return list.stream();
     }
 
 }
