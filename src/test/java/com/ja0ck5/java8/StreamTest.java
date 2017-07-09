@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
 /**
@@ -112,7 +113,12 @@ public class StreamTest {
     public void testStreamCollect() {
         men.stream().map(Man::getName).collect(Collectors.toList()).forEach(System.out::println);
         men.stream().map(Man::getName).collect(Collectors.toCollection(HashSet::new)).forEach(System.out::println);
+    }
 
+    @Test
+    public void testParallelStream() {
+        long sum = LongStream.rangeClosed(0, 1000000000L).parallel().reduce(0, Long::sum);
+        System.out.println(sum);
     }
 
 }
