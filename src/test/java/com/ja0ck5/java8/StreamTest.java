@@ -81,7 +81,7 @@ public class StreamTest {
     }
 
     @Test
-    public void testStreamTerminate() throws InterruptedException {
+    public void testStreamTerminate() {
         boolean b = men.stream().allMatch(e -> e.getStatus().equals(Man.Status.TALL));
         System.out.println(b);
 
@@ -93,6 +93,26 @@ public class StreamTest {
 
         Optional<Man> first = men.stream().findFirst();
         System.out.println(first.get());
+    }
+
+    @Test
+    public void testStreamReduce() {
+        List<Integer> list = Arrays.asList(1,2,3,4,5,6,7,8,9,10);
+        // 55
+        Integer sum = list.stream().reduce(0, (x, y) -> x + y);
+        System.out.println(sum);
+        System.out.println("==============");
+
+        Optional<Integer> op = men.stream().map(Man::getAge).reduce(Integer::sum);
+        System.out.println(op.get());
+
+    }
+
+    @Test
+    public void testStreamCollect() {
+        men.stream().map(Man::getName).collect(Collectors.toList()).forEach(System.out::println);
+        men.stream().map(Man::getName).collect(Collectors.toCollection(HashSet::new)).forEach(System.out::println);
+
     }
 
 }
